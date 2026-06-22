@@ -1,0 +1,191 @@
+\setcounter{section}{-1}
+
+\section{Preliminaries}
+
+\subsection{Basics} \label{sec0.1}
+
+\defi The \textbf{order} or \textbf{cardinality} of a set $A$ is denoted as $|A|$. If $A$ is finite, then $|A|$ is the number of elements in $A$.
+
+\defi The \textbf{Cartesian Product} of sets $A$ and $B$ is the collection of elements
+\[A \times B = \set{(a, b) \mid a \in A, b \in B}\]
+
+\defi A \textbf{function} from $A$ to $B$ is denoted as $f : A \to B$, and the value of $f$ at $a$ is denoted as $f(a)$.
+\begin{itemize}
+    \item The \textbf{domain} of $f$ is $A$, and the \textbf{codomain} of $f$ is $B$.
+    \item We write $f : a \mapsto b$ or $a \mapsto b$ to denote $f(a) = b$.
+    \item We say $f$ is \textbf{well-defined} when $f(a)$ is unambiguous for every $a \in A$.
+    \item The \textbf{range}, or \textbf{image of $A$ under $f$} is the subset of $B$ given by
+    \[f(A) = \set{b \in B \mid f(a) = b \text{ for some } a \in A}\]
+    \item The \textbf{preimage} or \textbf{inverse image} of some subset $C$ of $B$ is the subset of $A$ given by
+    \[f\inv(C) = \set{a \in A \mid f(a) \in C}\]
+    \item The \textbf{fiber of $f$ over $b$} for some $b \in B$ is the preimage of $b$, i.e., $f\inv(b)$.
+\end{itemize}
+
+\defi The \textbf{identity map} on a set $A$ is the function $\id_A : A \to A$ given by $\id_A(a) = a$ for every $a \in A$.
+
+\defi Let $f : A \to B$ and $g : B \to C$ be functions. Then the \textbf{composite map} $g \circ f : A \to C$ is given by
+\[(g \circ f)(a) = g(f(a)).\]
+
+\defi Let $f : A \to B$ be a function.
+\begin{itemize}
+    \item $f$ is \textbf{injective}/an \textbf{injection} if $a_1 \neq a_2$ implies $f(a_1) \neq f(a_2)$.
+    \item $f$ is \textbf{surjective}/a \textbf{surjection} if for every $b \in B$ there exists $a \in A$ such that $f(a) = b$, i.e., $f(A) = B$.
+    \item $f$ is \textbf{bijective}/a \textbf{bijection} if it is both injective and surjective.
+    \item A \textbf{left inverse} of $f$ is a function $g : B \to A$ such that $g \circ f : A \to A$ is $\id_A$.
+    \item A \textbf{right inverse} of $f$ is a function $h : B \to A$ such that $f \circ h : B \to B$ is $\id_B$.
+\end{itemize}
+
+\prop[Characterization of Injectivity, Surjectivity, and Bijections] \label{prop0.1}
+Let $f: A \to B$ be a function.
+\begin{enumerate}
+    \item $f$ is injective if and only if $f$ has a left inverse.
+    \item $f$ is surjective if and only if $f$ has a right inverse.
+    \item $f$ is a bijection if and only if there exists $g: B \to A$ such that $f \circ g$ is the identity map on $B$ and $g \circ f$ the identity map on $A$.
+    \item If $A$ and $B$ are finite sets where $|A| = |B|$, then the following are equivalent:
+    \begin{enumerate}
+        \item $f$ is bijective,
+        \item $f$ is injective,
+        \item $f$ is surjective.
+    \end{enumerate}
+\end{enumerate}
+
+\begin{proofnum}
+    \item Suppose $f$ is injective. Fix some $a_0 \in A$ such that $f(a_0) \in f(A)$, and let $g : B \to A$ be defined as follows:
+    \[g(b) =
+    \begin{cases}
+        a & a \in A \text{ such that } f(a) = b \\
+        a_0 & b \in B - f(A)
+    \end{cases}\]
+    To verify $g$ is a left-inverse is trivial by construction. The converse is trivial.
+    \item Surjectivity of $f$ implies nonempty fibers over every $b \in B$, hence there exists $a_b \in A$ such that $f(a_b) = b$. Define $h : B \to A$ by $h(b) = a_b$. This is clearly a right inverse of $f$. The converse is trivial.
+    \item If $f$ is bijective, there exists a unique $a \in A$ for every $b \in B$ such that $f(a) = b$. Define $g : B \to A$ by $g(b) = a$. It is clear that $g \circ f = \id_A$ and $f \circ g = \id_B$. The converse is trivial.
+    \item (a) implies (b) trivially. If (b) is true, then distinct elements of $A$ map to distinct elements of $B$. $|A| = |B|$ implies every element of $B$ is mapped to, hence (c) is true. If (c) is true, then every element of $B$ has nonempty fiber. Since $f$ is well-defined, and $|A| = |B|$, then every fiber must be a singleton.
+\end{proofnum}
+
+\defi The \textbf{inverse} of a function $f : A \to B$ is the function $g$ in \autoref{prop0.1}.
+
+\defi A \textbf{permutation} of a set $A$ is a bijection from $A$ to itself.
+
+\defi Let $A \subseteq B$ and $f : B \to C$. The \textbf{restriction} of $f$ to $A$ is the function $f|_A$.
+
+\defi Let $A \subseteq B$ and $g : A \to C$. The \textbf{extension} of $g$ to $B$ is a function $f : B \to C$ such that $f|_A = g$. Note that an extension of $g$ to $B$ may not be unique, and may not even exist.
+
+\defi Let $A$ be nonempty.
+\begin{itemize}
+    \item A \textbf{binary relation} on $A$ is some $R \subseteq A \times A$. We write $a \sim b$ if $(a, b) \in R$.
+    \item We say $\sim$ is:
+    \begin{itemize}
+        \item \textbf{reflexive} if $a \sim a$ for every $a \in A$,
+        \item \textbf{symmetric} if $a \sim b$ implies $b \sim a$ for every $a, b \in A$,
+        \item \textbf{transitive} if $a \sim b$ and $b \sim c$ implies $a \sim c$ for every $a, b, c \in A$.
+    \end{itemize}
+    \item A \textbf{equivalence relation} on $A$ is a binary relation that is reflexive, symmetric, and transitive.
+    \item Let $\sim$ be an equivalence relation on $A$. The \textbf{equivalence class} of $a \in A$ is the set $[a] = \set{b \in A \mid a \sim b}$. Elements of $[a]$ are \textbf{equivalent} to $a$ and are called \textbf{representatives} of $[a]$.
+    \item Let $I$ be some indexing set. A \textbf{partition} of $A$ is a collection of nonempty subsets $\set{A_i \mid i \in I}$ such that
+    \begin{itemize}
+        \item $A = \bigcup_{i \in I} A_i$,
+        \item $A_i \cap A_j = \emptyset$ for every $i, j \in I$ with $i \neq j$.
+    \end{itemize}
+\end{itemize}
+
+\prop[Fundamental Theorem of Equivalence Relations] \label{prop0.2}
+Let $A$ be a nonempty set.
+\begin{enumerate}
+    \item If $\sim$ is an equivalence relation on $A$, then the set of equivalence classes of $\sim$ form a partition of $A$.
+    \item If $\{A_i \mid i \in I\}$ is a partition of $A$, then there is an equivalence class relation on $A$ whose equivalence classes are the sets $A_i$ for $i \in I$.
+\end{enumerate}
+
+\begin{proofnum}
+    \item Let $B$ be the union of the set of equivalence classes of $\sim$. It is easy to see that $B = A$. To show that the equivalence classes are pairwise disjoint, it suffices to show that they must be equal if they are not disjoint. Let $[a], [b]$ have nontrivial intersection, and let $c \in [a] \cap [b]$. Then $c \sim a$ and $c \sim b$. Then $a \sim b$, hence $[a] = [b]$.
+    \item Define a relation on $A$ as follows: $a \sim b$ if and only if $a, b \in A_i$ for some $i \in I$. It is easy to verify that $\sim$ is an equivalence relation, and that the equivalence classes of $\sim$ are precisely the sets $A_i$ for $i \in I$.
+\end{proofnum}
+
+\newpage
+
+\subsection{Properties of the Integers} \label{sec0.2}
+
+\defi \textbf{Well Ordering of $\z$}: If $A \subseteq \z^+$ is nonempty, there exists $m \in A$ such that $m \leq a$ for every $a \in A$ called the \textbf{minimal element} of $A$.
+
+\defi For $a, b \in \z$ with $a \neq 0$, then $a$ \textbf{divides} $b$, denoted as $a \mid b$, if there exists $k \in \z$ such that $b = ak$. If $a \nmid b$, we write $a \nmid b$.
+
+\defi For nonzero $a, b \in \z$, the \textbf{greatest common divisor} of $a$ and $b$, denoted as $(a, b)$, is a unique positive integer $d$ such that
+\begin{itemize}
+    \item $d \mid a$ and $d \mid b$,
+    \item if $c \in \z$ such that $c \mid a$ and $c \mid b$, then $c \mid d$.
+\end{itemize}
+If $(a, b) = 1$, we say $a$ and $b$ are \textbf{relatively prime}.
+
+\defi For $a, b \in \z$ with $a \neq 0$, the \textbf{least common multiple} of $a$ and $b$, denoted as $\lcm(a, b)$, is a unique positive integer $\ell$ such that
+\begin{itemize}
+    \item $a \mid \ell$ and $b \mid \ell$,
+    \item if $c \in \z$ such that $a \mid c$ and $b \mid c$, then $\ell \mid c$.
+\end{itemize}
+Note that $d\ell = ab$.
+
+\defi The \textbf{Division Algorithm} states that for $a \in \z$ and $b \in \zp$, there exist unique $q, r \in \z$ such that
+\[a = bq + r, \quad 0 \leq r < b\]
+The integer $q$ is called the \textbf{quotient} and $r$ the \textbf{remainder} of $a$ upon division by $b$.
+
+\defi The \textbf{Euclidean Algorithm} is a method for computing the greatest common divisor of two integers $a$ and $b$ by repeatedly applying the Division Algorithm. More precisely, we have
+\begin{align*}
+    a & = bq_1 + r_1 \\
+    b & = r_1q_2 + r_2 \\
+    r_1 & = r_2q_3 + r_3 \\
+    & \vdots \\
+    r_{n-2} & = r_{n-1}q_n + r_n \\
+    r_{n-1} & = r_nq_{n+1}
+\end{align*}
+where $q_i \in \z$ and $r_i \in \z$ for every $i$. The algorithm terminates when we obtain a remainder of $0$, and the last nonzero remainder is the greatest common divisor of $a$ and $b$. We may backtrack the Euclidean Algorithm to find a \textbf{$\z$-linear combination} of $a$ and $b$ that equals $(a, b)$, i.e., we can find $x, y \in \z$ such that
+\[ax + by = (a, b).\]
+
+\ex Let $a = 63$ and $b = 39$. Applying the Euclidean Algorithm, we have
+\begin{align*}
+    63 & = 39(1) + 24 \\
+    39 & = 24(1) + 15 \\
+    24 & = 15(1) + 9 \\
+    15 & = 9(1) + 6 \\
+    9 & = 6(1) + 3 \\
+    6 & = 3(2)
+\end{align*}
+so that $(63, 39) = 3$. To find the $\z$-linear combination of $63$ and $39$ that equals $3$, we can backtrack the Euclidean Algorithm as follows: Observe that $3 = 9 - 6(1)$. Then $3 = 9 - (15 - 9(1))(1) = 2(9) - 15$. Continuing in this way, we obtain $3 = 5(63) - 8(39)$.
+
+\defi A $p \in \zp$ is \textbf{prime} if its only positive divisors are $1$ and $p$. Otherwise, $p$ is \textbf{composite}. Moreover, if $p \mid ab$ for some $a, b \in \z$, then $p \mid a$ or $p \mid b$.
+
+\defi The \textbf{Fundamental Theorem of Arithmetic} states that every integer $n > 1$ can be written as a product of primes, and this factorization is unique up to the order of the factors. More precisely, suppose
+\[n = p_1^{\alpha_1} p_2^{\alpha_2} \cdots p_k^{\alpha_k} = q_1^{\beta_1} q_2^{\beta_2} \cdots q_m^{\beta_m},\]
+where $p_i$ and $q_j$ are primes and $\alpha_i, \beta_j \in \zp$. Then $k = m$ and, after reordering, $p_i = q_i$ and $\alpha_i = \beta_i$ for all $i$.
+
+For $a, b \in \z$ with prime factorizations
+\[a = p_1^{\alpha_1} p_2^{\alpha_2} \cdots p_k^{\alpha_k}, \quad b = p_1^{\beta_1} p_2^{\beta_2} \cdots p_k^{\beta_k},\]
+where $p_i$ are the primes that divide $a$ or $b$, and $\alpha_i, \beta_i \in \zp$ with $\alpha_i = 0$ if $p_i \nmid a$ and $\beta_i = 0$ if $p_i \nmid b$, then
+\[(a, b) = p_1^{\min(\alpha_1, \beta_1)} p_2^{\min(\alpha_2, \beta_2)} \cdots p_k^{\min(\alpha_k, \beta_k)}, \quad \lcm(a, b) = p_1^{\max(\alpha_1, \beta_1)} p_2^{\max(\alpha_2, \beta_2)} \cdots p_k^{\max(\alpha_k, \beta_k)}.\]
+
+\defi The \textbf{Euler $\phi$-Function} is defined as such: for $n \in \zp$, then $\phi(n)$ is the number of positive integers less than or equal to $n$ that are relatively prime to $n$. We have two main properties:
+\begin{itemize}
+    \item If $p$ is prime and $\alpha \in \zp$, then $\phi(p^\alpha) = p^\alpha - p^{\alpha - 1}$.
+    \item If $m, n \in \zp$ are relatively prime, then $\phi(mn) = \phi(m)\phi(n)$.
+\end{itemize}
+
+\newpage
+
+\subsection{\texorpdfstring{$\intmod$: The Integers Modulo $n$}{Z/nZ: The Integers Modulo n}} \label{sec0.3}
+
+\defi The \textbf{congruence relation} modulo $n$ is the equivalence relation on $\z$ defined as follows: for $a, b \in \z$, we say $a$ is \textbf{congruent} to $b$ modulo $n$, denoted as $a \equiv b \bmod n$, if $n \mid (a - b)$. The \textbf{congruence class}, or \textbf{residue class} of $a$ modulo $n$ is the equivalence class of $a$ under the congruence relation, denoted as $\bar a$. The set of all congruence classes modulo $n$ is denoted as $\intmod$, also called the \textbf{integers modulo $n$}.
+
+\defi \textbf{Modular arithmetic} is the arithmetic of $\intmod$ under the operations of addition and multiplication defined as follows: for $\bar a, \bar b \in \intmod$, we define
+\[\bar a + \bar b = \bar{a + b}, \quad \bar a \cdot \bar b = \bar{ab}\]
+
+\theo[Modular Arithmetic is Well-Defined] \label{theo0.3}
+The operations of addition and multiplication on $\intmod$ are well-defined. More precisely, if $a, x \in \z$ and $b, y \in \z$ where $\bar a = \bar x$ and $\bar b = \bar y$, then $\bar{a + b} = \bar{x + y}$ and $\bar{ab} = \bar{xy}$.
+\begin{proof}
+    If $\bar a = \bar x$, then $a - x = sn$ for some $s \in \z$. Similarly, if $\bar b = \bar y$, then $b - y = tn$ for some $t \in \z$. Then
+    \[(a + b) - (x + y) = (a - x) + (b - y) = sn + tn = (s + t)n\]
+    and
+    \[(ab) - (xy) = a(b - y) + (a - x)y = a(tn) + (sn)y = (at + sy)n\]
+    which shows that $\bar{a + b} = \bar{x + y}$ and $\bar{ab} = \bar{xy}$.
+\end{proof}
+
+\prop[$\units = \set{\bar a \in \intmod \mid (a, n) = 1}$] \label{prop0.4}
+\begin{proof}
+    In exercises.
+\end{proof}

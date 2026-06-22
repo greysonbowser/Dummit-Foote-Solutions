@@ -1,0 +1,417 @@
+\section{Group Actions}
+
+\subsection{Group Actions and Permutation Representations} \label{sec4.1}
+
+\note Please recall definitions of group actions, permutation representations, kernels, stabilizers, and faithful actions from \autoref{sec1.7} and \autoref{sec2.2}.
+
+\ex Let $D_8$ act on $A = \set{\set{1, 3}, \set{2, 4}}$. Let $\b 1 = \set{1, 3}$ and $\b 2 = \set{2, 4}$. A rotation sends one pair to the other, while a reflection fixes both pairs. Hence, the permutation representation afforded by this action is
+\[r \mapsto (\b 1\ \b 2), \quad s \mapsto \id,\]
+or $\sigma_r = (\b 1\ \b2)$ and $\sigma_s = \id$. Note that $r^2 \mapsto \id$, hence the kernel of the action is $\gen{r^2, s}$.
+
+\prop[Group Actions as Homomorphisms] \label{prop4.1}
+For a group $G$ acting on a nonempty set $A$, there exists a bijection between the set of group actions of $G$ on $A$ and the set of homomorphisms from $G$ to $S_A$.
+\begin{proof}
+    Let $\phi : G \to S_A$, and consider the action of $G$ on $A$ defined by $g \cdot a = \phi(g)(a)$ for all $g \in G$ and $a \in A$. Clearly, the kernel of this action is $\ker\phi$, and the permutation representation afforded by this action is $\phi$ itself. 
+\end{proof}
+
+\defi Let $G$ be a group. Then a \textbf{permutation representation} of $G$ is a homomorphism of $G$ into $S_A$ for nonempty $A$. A given action of $G$ on $A$ \textbf{affords} or \textbf{induces} the associated permutation representation.
+
+\begin{prop}[Orbit-Stabilizer Theorem]
+    \label{prop4.2}
+    Let $G$ be a group acting on the nonempty set $A$. Then the relation on $A$ defined by
+    \[a \sim b \quad \text{if and only if} \quad a = g \cdot b~\text{for some $g\in G$}\]
+    is an equivalence relation. Moreover, for each $a \in A$, the size of the orbit of $a$ is given by $|G : G_a|$, the index of the stabilizer of $a$ in $G$.
+    \begin{proof}
+        Let $a, b, c \in G$. Reflexivity is trivial. If $a \sim b$, or $a = g \cdot b$ for $g \in G$, then $g\inv \cdot a = 1 \cdot b$, hence $b \sim a$. If $a \sim b$ and $b \sim c$ with $a = g \cdot b$ and $b = h \cdot c$ for $g, h \in G$, then $a = (gh) \cdot c$. Hence, $\sim$ is an equivalence relation.
+
+        Consider $[a]$. Let $b = g \cdot a \in [a]$. Then $g [a]$ is a left coset of $G_a$ in $G$. Define the map
+        \[\psi : [a] \to G/G_a, \quad g \cdot a \mapsto gG_a.\]
+        To see that $\psi$ is well defined and injective, note that $g \cdot a = h \cdot a$ if and only if $gG_a = hG_a$. Surjectivity is clear.
+    \end{proof}
+\end{prop}
+
+\defi Let $G$ act on nonempty $A$.
+\begin{enumerate}
+    \item The \textbf{orbit} of $a \in A$ is the equivalence class $[a]$ in \autoref{prop4.2}.
+    \item The action is \textbf{transitive} if there is only one orbit, i.e., for every $a, b \in A$, there exists some $g \in G$ such that $g \cdot a = b$.
+\end{enumerate}
+
+\ex $S_n$ acts on $\set{1, 2, \ldots, n}$ transitively by the natural action.
+
+\note To see that elements of $S_n$ have unique cycle decompositions, let $A = \set{1, 2, \ldots, n}$, $\sigma \in S_n$, and $G = \gen\sigma$. Let $G$ act on $A$, so by \autoref{prop4.2}, $A$ is partitioned into a unique set of disjoint orbits. Let $\oo$ be an orbit with some $a \in \oo$. The proof of \autoref{prop4.2} shows that the cosets of $G_a$ in $G$ are in bijection with elements of $\oo$ explicitly by
+\[\psi : \oo \to G/G_a, \quad \sigma^k \cdot a \mapsto \sigma^k G_a.\]
+Note that $G/G_a$ is cyclic with order $d = |G : G_a| = |\oo|$, where $d$ is smallest positive integer such that $\sigma^d \in G_a$. Thus, the distinct cosets of $G_a$ in $G$ are
+\[\set{G_a, \sigma G_a, \sigma^2 G_a, \ldots, \sigma^{d-1}G_a},\]
+and the elements of $\oo$ are
+\[\set{a, \sigma \cdot a, \sigma^2 \cdot a, \ldots, \sigma^{d-1} \cdot a}.\]
+Then $\sigma$ acts on $\oo$ as a $d$-cycle, and the cycle decomposition of $\sigma$ is obtained by considering all distinct orbits of $G$ on $A$. Since the orbits are unique, the cycle decomposition of $\sigma$ is unique up to the order of the cycles.
+\newpage
+
+\subsection{Groups Acting on Themselves by Left Multiplication---Cayley's Theorem} \label{sec4.2}
+
+\note For finite $G$, enumerate the elements as $g_1, \ldots, g_n$. A permutation $\sigma_g$ for $g \in G$ is then given by
+\[\sigma_g(i) = j \quad \text{if and only if} \quad gg_i = g_j,\]
+with different labelling of the elements of $G$ giving different permutations. 
+
+\ex Label $V_4 = \set{1, a, b, c}$ as $1, 2, 3, 4$ respectively. Computing $\sigma_a$, we see
+\begin{align*}
+    a \cdot 1 = a & \implies \sigma_a(1) = 2, \\
+    a \cdot a = 1 & \implies \sigma_a(2) = 1, \\
+    a \cdot b = c & \implies \sigma_a(3) = 4, \\
+    a \cdot c = b & \implies \sigma_a(4) = 3,
+\end{align*}
+hence $\sigma_a = (1\ 2)(3\ 4)$. Similarly, we have $\sigma_b = (1\ 3)(2\ 4)$ and $\sigma_c = (1\ 4)(2\ 3)$.
+
+\ex Let $H \leq G$ for group $G$, and let $A = G/H$. We may define $G$ to act on $A$ by left multiplication via the action
+\[g \cdot (xH) = (gx)H \quad \text{for all $g, x \in G$}.\]
+Moreover, if $|G : H|$ is finite, we may similarly enumerate them as previously done.
+
+\theo[Properties of the Coset Action] \label{theo4.3}
+Let $G$ be a group with $H \leq G$, and let $G$ act on $A = G/H$ by left multiplication. Let $\pi_H$ be the associated permutation representation afforded by this action. Then
+\begin{enumerate}
+    \item $G$ acts transitively on $A$,
+    \item $G_{1H} = H$, and
+    \item $\ker\pi_H = \bigcap_{g \in G} gHg\inv$, and $\ker\pi_H$ is the largest normal subgroup of $G$ contained in $H$.
+\end{enumerate}
+
+\begin{proofnum}
+    \item Let $g_1H, g_2H \in A$, and put $g = g_2g_1\inv$. Then $g \cdot (g_1H) = g_2H$.
+    \item By definition, $G_{1H} = \set{g \in G \mid g \cdot 1H = 1H} = \set{g \in G \mid gH = H} = H$.
+    \item By definition, $g \in \ker\pi_H$ when $gxH = xH$, or $x\inv gxH = H$, hence $g \in xHx\inv$ for all $x \in G$. Clearly, $\ker\pi_H \nsub G$ and $\ker\pi_H \leq H$. Let $N \nsub G$ such that $N \leq H$. Then $N = xNx\inv \leq xHx\inv$ for all $x \in G$. It follows that $\ker\pi_H$ is the largest normal subgroup of $G$ contained in $H$.
+\end{proofnum}
+
+\cor[Cayley's Theorem] \label{cor4.4}
+Every group is isomorphic to a subgroup of a symmetric group.
+\begin{proof}
+    Use $H = 1$ in \autoref{theo4.3}. Then $\ker\pi_H = 1$, so that $\pi_H$ is injective, and $G$ is isomorphic to the subgroup $\pi_H(G)$ of $S_{G/H} = S_G$.
+\end{proof}
+
+\cor[Subgroups of Smallest Prime Index are Normal] \label{cor4.5}
+Let $|G| = n < \infty$, and let $p$ be the smallest prime dividing $n$. Then every subgroup of index $p$ in $G$ is normal.
+
+\begin{proof}
+    Let $H \leq G$ with $|G : H| = p$. Let $\pi_H$ be the permutation afforded by $G$ acting on $G/H$ by left multiplication, let $K = \ker\pi_H$, and put $|H : K| = k$. Then $|G : K| = |G : H||H : K| = pk$. By the First Isomorphism Theorem, $G/K \cong \pi_H(G) \leq S_{G/H} = S_p$. Lagrange's shows that $pk \mid p!$, or $k \mid (p - 1)!$. Since $p$ is the smallest prime dividing $n$, then $k = 1$, so that $H = K \nsub G$.
+\end{proof}
+
+\newpage
+
+\subsection{Groups Acting on Themselves by Conjugation---The Class Equation} \label{sec4.3}
+
+\defi 
+\begin{itemize}
+    \item Let $g, h \in G$. Then $g$ and $h$ are \textbf{conjugate} in $G$ if there exists some $x \in G$ such that $h = xgx\inv$. The equivalence classes of this relation are the \textbf{conjugacy classes} of $G$.
+    \item Let $G$ act on $\pp(G)$. For $S, T \in \pp(G)$, we say $S$ and $T$ are \textbf{conjugate} in $G$ if there exists some $x \in G$ such that $T = xSx\inv$, generalizing the previous definition of conjugacy for elements of $G$.
+\end{itemize}
+
+\prop[Conjugation Under Orbit-Stabilizer Theorem] \label{prop4.6}
+The number of conjugates of $S \subseteq G$ in $G$ is $|G : N_G(S)|$. Moreover, the number of conjugates of $g \in G$ is $|G : C_G(g)|$.
+
+\begin{proof}
+    Note that $G_S = \set{g \in G \mid gSg\inv = S} = N_G(S)$, and $N_G(g) = C_G(g)$ for any $g \in G$.
+\end{proof}
+
+\theo[The Class Equation] \label{theo4.7}
+Let $G$ be finite with $g_1, g_2, \ldots, g_s$ be representatives of distinct conjugacy classes of $G$ not in $Z(G)$. Then
+\[|G| = |Z(G)| + \sum_{i=1}^s |G : C_G(g_i)|.\]
+\begin{proof}
+    Note that each $z \in Z(G)$ has conjugacy class $\set z$, and each $g_i$ has conjugacy class of size $|G : C_G(g_i)|$. Since the conjugacy classes of $G$ partition $G$, the class equation follows.
+\end{proof}
+
+\ex Observe $\gen g \leq C_G(g)$ for any $g \in G$. In $G = Q_8$, we know $\gen i \leq C_G(i) \leq G$. However, $i \not\in Z(G)$, so that $C_G(i)$ is a proper subgroup of $G$. Since $|G : \gen i| = 4$, it follows that $C_G(i) = \gen i$. Hence, the conjugacy class of $i$ has size $|G : C_G(i)| = 2$, and the conjugates of $i$ are itself and $-i = jij\inv$. The conjugacy classes for $j$ and $k$ are similar, hence the conjugacy classes of $Q_8$ are
+\[\set 1, \quad \set{-1}, \quad \set{\pm i}, \quad \set{\pm j}, \quad \set{\pm k}\]
+with sizes 1, 1, 2, 2, and 2, respectively. The class equation for $Q_8$ is then $|Q_8| = 2 + 2 + 2 + 2 = 8$.
+
+\theo[Prime Power Order Implies Nontrivial Center] \label{theo4.8}
+Let $p$ be prime with $|P| = p^n$ for $n \geq 1$. Then $Z(P)$ is nontrivial.
+\begin{proof}
+    The class equation gives
+    \[|P| = |Z(P)| + \sum_{i=1}^m |P : C_P(g_i)|,\]
+    with representatives $g_1, g_2, \ldots, g_m$ of distinct conjugacy classes. Since $C_P(g_i) \neq P$, each $|P : C_P(g_i)|$ is a power of $p$, hence $|Z(P)|$ is divisible by $p$, so that $Z(P)$ is nontrivial.
+\end{proof}
+
+\cor[Classification of Groups of Order $p^2$] \label{cor4.9}
+If $|P| = p^2$ for prime $p$, then $P$ is abelian. More precisely, $P \cong Z_{p^2}$ or $P \cong Z_p \times Z_p$.
+\begin{proof}
+    \autoref{theo4.8} implies $Z(P) \neq 1$, hence $P/Z(P)$ is cyclic and $P$ is abelian. If $x \in P$ with $|x| = p^2$, then $P = \gen x$, so assume no element of $P$ has order $p^2$, hence has order $p$. Consider nonidentity $a \in P$ with $b \in P - \gen a$. We have $\gen a < \gen{a, b}$ strictly by construction, hence $\gen{a, b} = P$. Observe $\gen a \times \gen b = Z_p \times Z_p$, and the map $(a^m, b^n) \mapsto a^mb^n$ is clearly an isomorphism from $\gen a \times \gen b$ to $P$.
+\end{proof}
+
+\prop[Conjugation in $S_n$] \label{prop4.10}
+Let $\sigma, \tau \in S_n$. If $\sigma$ has cycle decomposition
+\[\sigma = (a_1\ a_2 \cdots a_{\ell_1})(b_1\ b_2 \cdots b_{\ell_2}) \cdots\]
+then the cycle decomposition of $\tau\sigma\tau\inv$ is
+\[\tau\sigma\tau\inv = (\tau(a_1)\ \tau(a_2) \cdots \tau(a_{\ell_1}))(\tau(b_1)\ \tau(b_2) \cdots \tau(b_{\ell_2})) \cdots\]
+\begin{proof}
+    If $\sigma(i) = j$, it is clear that $\tau\sigma\tau\inv(\tau(i)) = \tau(j)$.
+\end{proof}
+
+\defi Let $\sigma \in S_n$ be the product of disjoint cycles with lengths $\ell_1, \ell_2, \ldots, \ell_k$, such that $\ell_1 \leq \ell_2 \leq \cdots \leq \ell_k$. Then the \textbf{cycle type} of $\sigma$ is the $k$-tuple $(\ell_1, \ell_2, \ldots, \ell_k)$.
+
+\defi A \textbf{partition} of $n \in \zp$ is a nondecreasing sequence of positive integers with sum $n$.
+
+\prop[Conjugacy Criterion in $S_n$] \label{prop4.11}
+$\sigma, \tau \in S_n$ are conjugate if and only if they have the same cycle type. Moreover, the number of conjugacy classes of $S_n$ is the number of partitions of $n$.
+\begin{proof}
+    \autoref{prop4.10} shows that conjugate permutations have the same cycle type. Conversely, if $\sigma$ and $\tau$ have the same cycle type, then we may write
+    \[\sigma = (a_1\ a_2 \cdots a_{\ell_1})(b_1\ b_2 \cdots b_{\ell_2}) \cdots, \quad \tau = (c_1\ c_2 \cdots c_{\ell_1})(d_1\ d_2 \cdots d_{\ell_2}) \cdots\]
+    Then $\alpha \in S_n$ defined by $\alpha(a_i) = c_i$ for $1 \leq i \leq \ell_1$, $\alpha(b_i) = d_i$ for $1 \leq i \leq \ell_2$, and so on, satisfies $\alpha\sigma\alpha\inv = \tau$.
+
+    The conjugacy classes of $S_n$ are in bijection with the cycle types of elements of $S_n$, which are in bijection with the partitions of $n$, hence the second assertion follows.
+\end{proof}
+
+\ex For an $m$-cycle $\sigma \in S_n$, we claim the number of conjugates of $\sigma$ is
+\[\frac{|S_n|}{|C_{S_n}(\sigma)} = \frac{n!}{m(n - m)!} = \frac{n(n - 1) \cdots (n - m + 1)}{m}\]
+Note $\sigma$ commutes with its powers, and commutes with the $(n - m)!$ permutations of the remaining $n - m$ integers, hence $|C_{S_n}(\sigma)| = m(n - m)!$.
+
+\note If $H \nsub G$, then for any conjugacy class $\cc$ of $G$, either $\cc \subseteq H$ or $\cc \cap H = \emptyset$: if $g \in \cc \cap H$, then $xgx\inv \in H$ for all $x \in G$, hence $\cc \subseteq H$.
+
+\theo[$A_5$ is Simple] \label{theo4.12}
+\begin{proof}
+    We know the representatives of the even permutations are of the form
+    \[\id, (1\ 2\ 3), (1\ 2\ 3\ 4\ 5), (1\ 2)(3\ 4).\]
+    \begin{itemize}
+        \item $\id$ is its own conjugacy class with size 1.
+        \item $C_{A_5}((1\ 2\ 3)) = \gen{(1\ 2\ 3)}$ has order 3, so the conjugacy class of $(1\ 2\ 3)$ has size $60/3 = 20$. All 3-cycles are conjugate in $A_5$ since they have the same cycle type.
+        \item $C_{A_5}((1\ 2\ 3\ 4\ 5)) = \gen{(1\ 2\ 3\ 4\ 5)}$ has order 5, so the conjugacy class of $(1\ 2\ 3\ 4\ 5)$ has size $60/5 = 12$. However, there are 24 5-cycles in $A_5$, so there are two conjugacy classes of 5-cycles in $A_5$.
+        \item All odd-order elements have been accounted for, hence the remaining 15 are order 2 with cycle type $(2, 2)$. It is easy to verify that $C_{A_5}((1\ 2)(3\ 4))$ has order 4, so the conjugacy class of $(1\ 2)(3\ 4)$ has size $60/4 = 15$.
+    \end{itemize}
+    The class equation for $A_5$ is then
+    \[60 = 1 + 20 + 12 + 12 + 15.\]
+    By the previous note, a nontrivial normal subgroup of $A_5$ must be the union of some of the nontrivial conjugacy classes, but no such union has size dividing 60, hence $A_5$ is simple.
+\end{proof}
+
+\defi A \textbf{right group action} can be defined analogously as a map from $A \times G$ to $A$, denoted by $a \cdot g$ for $a \in A$ and $g \in G$, such that
+\begin{enumerate}
+    \item $a \cdot 1 = a$ for all $a \in A$, and
+    \item $(a \cdot g) \cdot h = a \cdot (gh)$ for all $a \in A$ and $g, h \in G$.
+\end{enumerate}
+
+\note Conjugation is typically written as a right group action: $a^g = g\inv a g$ for $a, g \in G$. Similarly, $S^g = g\inv S g$ for $S \subseteq G$ and $g \in G$.
+
+\note If we are given a left group action of $G$ on $A$, we can define a right group action of $G$ on $A$ by $a \cdot g = g\inv \cdot a$ for all $a \in A$ and $g \in G$.
+
+\newpage
+
+\subsection{Automorphisms} \label{sec4.4}
+
+\defi An isomorphism from a group $G$ to itself is an \textbf{automorphism}. The set of automorphisms of $G$ is denoted by $\aut(G)$.
+
+\prop[Conjugation on Normal Subgroups] \label{prop4.13}
+Let $H \nsub G$. Let $G$ act on $H$ by conjugation. Then $G$ acts on conjugation on $H$ by automorphisms, defined as
+\[g \cdot h \mapsto ghg\inv, \quad g \in G, h \in H.\]
+Each conjugation by $g$ is in $\aut(H)$, and $\pi_H : G \to \aut(H)$ is a homomorphism with kernel $C_G(H)$. In particular, $G/C_G(H)$ is isomorphic to a subgroup of $\aut(H)$.
+
+\begin{proof}
+    Let $\phi_g : H \to H$ be defined by $\phi_g(h) = ghg\inv$ for all $h \in H$. Since $H \nsub G$, then $\phi_g$ is well defined. Observe $\phi_g$ has inverse $(\phi_g)\inv = \phi_{g\inv}$, so $\phi_g$ is bijective. To see that $\phi_g$ is a homomorphism, note that
+    \[\phi_g(h_1h_2) = g(h_1h_2)g\inv = (gh_1g\inv)(gh_2g\inv) = \phi_g(h_1)\phi_g(h_2)\]
+    for all $h_1, h_2 \in H$. Hence, $\phi_g \in \aut(H)$ for all $g \in G$.
+
+    Since $\pi_H$ has been shown to be a homomorphism, we simply observe that $\ker\pi_H$ consists of $g \in G$ such that $ghg\inv = h$ for all $h \in H$, or $g \in C_G(H)$, hence $\ker\pi_H = C_G(H)$. The First Isomorphism Theorem then gives $G/C_G(H) \cong \pi_H(G) \leq \aut(H)$.
+\end{proof}
+
+\cor[Conjugate Subgroups are Isomorphic] \label{cor4.14}
+For $H \leq G$ with $g \in G$, then $H \cong gHg\inv$. In particular, $|h| = |ghg\inv|$, and $|H| = |gHg\inv|$.
+
+\begin{proof}
+    Put $G = H$ in \autoref{prop4.13}. Conjugation is then an automorphism, and the result follows.
+\end{proof}
+
+\cor[Normalizer/Centralizer Theorem] \label{cor4.15}
+For $H \leq G$, then $N_G(H)/C_G(H)$ is isomorphic to a subgroup of $\aut(H)$. In particular, $G/Z(G)$ is isomorphic to a subgroup of $\aut(G)$.
+
+\begin{proof}
+    Put $G = N_G(H)$ in \autoref{prop4.13}. Then $N_G(H)/C_G(H) \cong \pi_H(N_G(H)) \leq \aut(H)$. The second assertion follows by putting $H = G$, hence $N_G(H) = G$ and $C_G(H) = Z(G)$.
+\end{proof}
+
+\defi Conjugation by $g \in G$ is called an \textbf{inner automorphism} of $G$. The set of inner automorphisms of $G$ is denoted by $\inn(G)$, which is a subgroup of $\aut(G)$.
+
+\note Observe $\inn(G) \cong G/Z(G)$ by \autoref{cor4.15}.
+
+\defi Some $H \leq G$ is called \textbf{characteristic}, denoted $H \cha G$, if $\phi(H) = H$ for all $\phi \in \aut(G)$.
+
+\note
+\begin{enumerate}
+    \item Characteristic subgroups are normal,
+    \item if $H$ has unique order in $G$, then $H \cha G$ since automorphisms preserve order, and
+    \item If $K \cha H$ and $H \nsub G$, then $K \nsub G$.
+\end{enumerate}
+
+\prop[$\aut(Z_n) \cong \units$] \label{prop4.16}
+For $n \in \zp$, then $\aut(Z_n) \cong \units$, where $|\units| = \phi(n)$ is the Euler $\phi$-function of $n$.
+
+\begin{proof}
+    Put $Z_n = \gen x$. For $\phi \in \aut(Z_n)$, then $\phi(x) = x^k$ for $k \in \z$, and $k$ determines $\phi$. Denote this map as $\phi_k$. Since $\phi_k$ is an automorphism, then $x^k$ is a generator of $Z_n$, so that $\gcd(k, n) = 1$. Conversely, if $\gcd(k, n) = 1$, then $\phi_k$ is an automorphism. We then have a surjection
+    \[\Phi : \aut(Z_n) \to \units, \quad \phi_k \mapsto k \mod n. \]
+    Observe $\phi_k \circ \phi_\ell(x) = \phi_k(x^\ell) = x^{k\ell} = \phi_{k\ell}(x)$, hence
+    \[\Phi(\phi_k \circ \phi_\ell) = \Phi(\phi_{k\ell}) = k\ell \bmod n = (k \bmod n)(\ell \bmod n) = \Phi(\phi_k)\Phi(\phi_\ell),\]
+    so $\Phi$ is a homomorphism. Finally, $\ker\Phi$ is trivial, so $\Phi$ is an isomorphism.
+\end{proof}
+
+\ex If $|G| = pq$ for distinct primes $p \leq q$ such that $p \nmid q - 1$, then $G$ is abelian. If $Z(G) \neq 1$, then $G/Z(G)$ is cyclic, hence $G$ abelian. If $Z(G) = 1$ with every nonidentity element of $G$ having order $p$, then its centralizer has $q$, hence the class equation is $pq = 1 + kq$, but $q \nmid 1$. Then there must be some $g \in G$ with $|g| = q$.
+
+Put $H = \gen g$. Then $H$ has index $p$ in $G$ with $p$ smallest prime dividing $|G|$, so $H \nsub G$ by \autoref{cor4.5}. Trivial center implies $C_G(H) = H$, hence $G/H = N_G(H)/C_G(H)$ is isomorphic to a subgroup of $\aut(H) \cong \units$, which has order $q - 1$. But \autoref{prop4.16} has $\aut(H) = \phi(q) = q - 1$, so $p \mid q - 1$, a contradiction. Hence, $G$ is abelian.
+
+\prop[Common Automorphism Groups] \label{prop4.17}
+
+\begin{enumerate}
+    \item Let $p$ be odd prime with $n \in \zp$. Then $\aut(Z_p)$ is cyclic with order $p - 1$. More generally, $\aut(Z_{p^n})$ is cyclic with order $p^{n - 1}(p - 1)$.
+    \item For $n \geq 3$, $\aut(Z_{2^n}) \cong Z_2 \times Z_{2^{n - 2}}$ and has a cyclic subgroup of index 2.
+    \item Let $p$ be prime with abelian additive group $V$ such that $pv = 0$ for all $v \in V$. If $|V| = p^n$, then $V$ is an $n$-dimensional vector space over $\f_p = \intmod[p]$. More precisely, $\aut(V)$ is the set of nonsingular linear transformations from $V$ to itself:
+    \[\aut(V) \cong \gl(V) \cong \gl_n(\f_p)\]
+    with $|\aut(V)| = |\gl_n(\f_p)| = (p^n - 1)(p^n - p) \cdots (p^n - p^{n - 1})$.
+    \item For $n \neq 6$, $\aut(S_n) = \inn(S_n) \cong S_n$. However, $n = 6$ is exceptional with $|\aut(S_6) : \inn(S_6)| = 2$.
+    \item $\aut(D_8) \cong D_8$ and $\aut(Q_8) \cong S_4$.
+\end{enumerate}
+
+\begin{proofnum}
+    \item Check \autoref{cor9.20}.
+    \item Check \autoref{cor9.20}.
+    \item Check \autoref{sec10.2} and \autoref{sec11.1}.
+    \item Check Exercises 4.4.19 and 6.3.10.
+    \item Check Exercises 4.4.4, 4.4.5, and 6.3.9.
+\end{proofnum}
+
+\ex \autoref{chap5} will define the \textbf{elementary abelian group} of order $p^n$. For a prime $p$, the elementary abelian group of order $p^2$ is $Z_p \times Z_p$ with automorphism group $\aut(Z_p \times Z_p) \cong \gl_2(\f_p)$. Hence, $\aut(Z_p \times Z_p)$ has order $p(p - 1)^2(p + 1)$. If cyclic, then $\aut(Z_{p^2})$ has order $p(p - 1)$, so that $\aut(Z_p \times Z_p)$ is much larger than $\aut(Z_{p^2})$.
+
+\ex A group of order $45 = 3^2 \cdot 5$ with normal $P$ of order $3^2$ is necessarily abelian: by \autoref{cor4.15}, $G/C_G(P)$ is isomorphic to a subgroup of $\aut(P)$, which has order 6 or 48, depending on cyclicity of $P$. Since $|P| = 3^2$, then $P$ is abelian so $P \leq C_G(P)$. Since $|G/C_G(P)|$ divides $|\aut(P)|$, then $|G/C_G(P)|$ divides 6, so that $C_G(P) = G$, hence $P \leq Z(G)$, so that $G$ is abelian.
+
+\newpage
+
+\subsection{Sylow's Theorem} \label{sec4.5}
+
+\defi Let $G$ be a group with prime $p$.
+\begin{itemize}
+    \item A \textbf{$p$-group} is a group of order $p^n$ for $n \in \zp$. Subgroups of $p$-groups are called \textbf{$p$-subgroups}.
+    \item If $|G| = p^nm$ where $p \nmid m$, then a \textbf{Sylow $p$-subgroup} of $G$ is a subgroup of order $p^n$.
+    \item We denote the set of Sylow $p$-subgroups of $G$ by $\syl_p(G)$, and its size by $n_p(G) = |\syl_p(G)|$.
+\end{itemize}
+
+\theo[Sylow's Theorem(s)] \label{theo4.18}
+Let $|G| = p^nm$ for prime $p$ with $p \nmid m$. Then
+\begin{enumerate}
+    \item $\syl_p(G) \neq \emptyset$,
+    \item If $P \in \syl_p(G)$ and $Q$ is a $p$-subgroup of $G$, then $Q \leq gPg\inv$ for some $g \in G$. In particular, any two Sylow $p$-subgroups of $G$ are conjugate.
+    \item $n_p(G) \equiv 1 \bmod p$, and $n_p = |G : N_G(P)|$ so that $n_p \mid m$.
+\end{enumerate}
+\dspace
+
+\lem[Intersections with Normalizer of Sylow $p$-Subgroup] \label{lem4.19}
+Let $P \in \syl_p(G)$ and $Q$ be a $p$-subgroup of $G$. Then $Q \cap N_G(P) = Q \cap P$.
+
+\begin{proof}
+    Put $R = N_G(P) \cap Q$. Observe $P \leq N_G(P)$, hence $P \cap Q \leq R$. The reverse inclusion is done by considering $PR$, which is a subgroup of $G$ since $H \nsub P$. It has order
+    \[\frac{|P||R|}{|P \cap R|}\]
+    by \autoref{cor3.15}. Moreover, observe that $R$ is a $p$-group since $R \leq Q$, so that $|PR|$ is a power of $p$. Since both $P$ and $P \cap R$ are $p$-groups, then $|PR|$ is a $p$-power. Since $P \leq PH$ and $P \in \syl_p(G)$, then $PR = P$, so that $R \leq P$.
+\end{proof}
+
+\begin{proof}[Proof of Sylow's Theorem(s)]
+    \leavevmode
+    \begin{enumerate}
+        \item Assume $\smash{\syl_p(G)} \neq \emptyset$ for all groups less than $|G|$. If $p$ divides $|Z(G)|$, then $z \in Z(G)$ with $|z| = p$ exists. Put $\bar G = G/\gen z$, hence $|\bar G| = p^{n - 1}m$. Then $\bar P \leq \bar G$ with $|\bar P| = p^{n - 1}$ exists by the inductive hypothesis. Let $P$ be the preimage of $\bar P$ under the natural projection $G \to \bar G$. Then $P$ is a subgroup of $G$ with $|P| = p^n$, so $P \in \syl_p(G)$.
+        
+        Suppose $p$ doesn't divide $|Z(G)|$. Let $g_1, g_2, \ldots, g_k$ be representatives of distinct conjugacy classes of $G$ not in $Z(G)$. Then the class equation gives
+        \[|G| = |Z(G)| + \sum_{i = 1}^k |G : C_G(g_i)|.\]
+        If $p$ divides all $|G : C_G(g_i)|$, then $p$ would divide $|Z(G)|$, hence assume there exists $i$ such that $p$ doesn't divide $|G : C_G(g_i)|$, and put $C = C_G(g_i)$. Then $|C| = p^nm'$, where $p \nmid m'$. By the inductive hypothesis, $C$ has a Sylow $p$-subgroup $P$, which is also a Sylow $p$-subgroup of $G$ since $|P| = p^n$.
+        \item By (i), $\syl_p(G) \neq \emptyset$, so let $P \in \syl_p(G)$. Define $\cc = \set{P_1, P_2, \ldots, P_k}$ as the set of \textit{all} conjugates of $P$ in $G$. Let $Q$ be a $p$-subgroup of $G$ acting on $\cc$ by conjugation, hence
+        \[\cc = \oo_1 \cup \oo_2 \cup \cdots \cup \oo_\ell\]
+        where each $\oo_i$ is a distinct orbit of $Q$ on $\cc$. Relabel elements of $\cc$ such that $P_i \in \oo_i$ for $1 \leq i \leq \ell$. By \autoref{prop4.6}, we know $|\oo_i| = |Q : N_Q(P_i)|$ for $1 \leq i \leq \ell$. Observe $N_Q(P_i) = N_G(P_i) \cap Q = P_i \cap Q$ by \autoref{lem4.19}, hence $|\oo_i| = |Q : P_i \cap Q|$.
+
+        $Q$ was arbitrary, so put $Q = P_1$ so that $|\oo_1| = 1$. It follows that $P_1 \neq P_i$ for $2 \leq i \leq \ell$, hence $P_1 \cap P_i < P_1$, and $|\oo_i| = |P_1 : P_1 \cap P_i|$ is a power of $p$ for $2 \leq i \leq \ell$. Since $|\cc| = k$ is the number of conjugates of $P$, then
+        \[k = |\oo_1| + |\oo_2| + \cdots + |\oo_\ell| \equiv 1 \bmod p.\]
+        Now, if $Q$ is again any $p$-subgroup of $G$ not contained in any $P_i$, then $Q \cap P_i < Q$, so each $\oo_i$ has order divisible by $p$, contradicting that $k \equiv 1 \bmod p$. Hence, $Q \leq P_i$ for some $i$, so $Q \leq gPg\inv$ for some $g \in G$. If $Q \in \syl_p(G)$, then $Q$ has order $p^n$, so $Q = gPg\inv$.
+        \item By proof in (ii), we know $\cc = \syl_p(G)$, so $n_p = |\cc| \equiv 1 \bmod p$. Moreover, we have that \autoref{prop4.6} gives $n_p = |G : N_G(P)|$, so $n_p \mid m$ since $|G| = p^nm$. \qh
+    \end{enumerate}
+\end{proof}
+
+\note Sylow's Theorem (ii) and \autoref{cor4.14} imply that all Sylow $p$-subgroups of $G$ are isomorphic.
+
+\cor[Characterizations of Normal Sylow $p$-Subgroups] \label{cor4.20}
+Let $P \in \syl_p(G)$. Then the following are equivalent:
+\begin{enumerate}
+    \item $n_p(G) = 1$,
+    \item $P \nsub G$,
+    \item $P \cha G$,
+    \item if $S \subseteq G$ such that $|s|$ is a power of $p$ for all $s \in S$, then $\gen S$ is a $p$-group.
+\end{enumerate}
+
+\begin{proofitem}
+    \item If (i) is true, observe $gPg\inv = P$ for all $g \in G$, so $P \nsub G$. Conversely, if (ii) is true, then $gPg\inv = P$ for all $g \in G$, so $n_p(G) = 1$.
+    \item If (ii) is true, $P$ is the unique Sylow $p$-subgroup of $G$, and the result follows by Exercise 4.4.7. Conversely, if (iii) is true, the result follows by Exercise 4.4.6.
+    \item If (i) is true, let $S \subseteq G$ with every $s \in S$ having $p$-power order. Then $s \in gPg\inv = P$ for $g \in G$ by \hyperref[theo4.18]{Sylow's Theorem} (ii), hence $\gen S \leq P$ is a $p$-group. Conversely, if (iv) is true, put $S$ as the union of all Sylow $p$-subgroups of $G$. For $P \in \syl_p(G)$, then $P \leq \gen S$. However, $P$ has maximal order, so $\gen S = P$, hence $P$ is the unique Sylow $p$-subgroup of $G$.
+\end{proofitem}
+
+\defi The \textbf{$p$-primary component} of a finite abelian group $G$ is the Sylow $p$-subgroup of $G$ containing all elements of $G$ with $p$-power order.
+
+\ex Consider groups of order $pq$ with primes $p < q$. Let $P \in \syl_p(G)$ and $Q \in \syl_q(G)$. We claim $Q \nsub G$, and if $P \nsub G$, then $G \cong Z_{pq}$.
+\begin{itemize}
+    \item Note $n_q \equiv 1 \bmod q$ and $n_q \mid p$, so $n_q = 1$, hence $Q \nsub G$.
+    \item Observe $n_p \equiv 1 \bmod p$ and $n_p \mid q$, so $n_p = 1$ or $q$. If $n_p = 1$, then $P \nsub G$. In particular, if $p \nmid q - 1$, then $n_p \neq q$ so that $P \nsub G$.
+    
+    Now put $P = \gen g$ and $Q = \gen h$. Note $G/C_G(P)$ is isomorphic to a subgroup of $\aut(P)$ with order $p - 1$. Since $p$ and $q$ do not divide $p - 1$, and $P \nsub G$, then $C_G(P) = G$, so $P \leq Z(G)$ and $g$ commutes with $h$. It follows that $|gh| = pq$, so $G = \gen{g, h} \cong Z_{pq}$.
+    \item If $p \mid q - 1$, then $n_p = q$ is possible. Let $Q \in \syl_q(S_q)$, and note that $|N_{S_q}(Q)| = q(q - 1)$. Cauchy's Theorem gives $P \leq N_{S_q}(Q)$ with $|P| = p$. Then $PQ$ has order $pq$ by \autoref{cor3.15}, and since $C_{S_q}(Q) = Q$ by \autoref{sec4.3}, $PQ$ is non-abelian.
+\end{itemize}
+
+\ex Let $|G| = 30$. We claim this has a normal subgroup isomorphic to $Z_{15}$. Let $P \in \syl_5(G)$ and $Q \in \syl_3(G)$. If $P \nsub G$ or $Q \nsub G$, then \autoref{cor3.15} shows $|PQ| = 15$, hence $PQ \nsub G$ since $|G : PQ| = 2$. However, both $P$ and $Q$ are characteristic in $PQ$ by the previous example (they are unique subgroups of their orders), so $P \nsub G$ and $Q \nsub G$.
+
+Suppose neither group is normal. Then $n_5 = 6$ and $n_3 = 10$. Note that distinct Sylow 3- and 5-subgroups intersect trivially, hence $G$ has at least $1 + 6(5 - 1) + 10(3 - 1) = 44$ elements, contradicting $|G| = 30$. Hence, at least one of $P$ and $Q$ (and thus both) is normal.
+
+\ex Let $|G| = 12$. We claim $n_3(G) = 1$, or $G \cong A_4$. Suppose $n_3 \neq 1$, and let $P \in \syl_3(G)$. Then $n_3 = 4$ and $P$ has trivial intersection with its conjugates, hence there are 8 elements of order 3 in $G$. Moreover, $|G : N_G(P)| = 4$, hence $N_G(P) = P$. Let $G$ act on $\syl_3(G)$ by conjugation, hence we have an afforded homomorphism
+\[\phi : G \to S_4\]
+with kernel $K$. Note that $K$ normalizes all Sylow 3-subgroups of $G$, hence $K \leq N_G(P) = P$. If $|K| = 3$, then $K = P$. Recall kernels are normal, hence $P \nsub G$, a contradiction. If $|K| = 1$, then $\phi$ is injective, so $G \cong \phi(G) \leq S_4$. Since $G$ contains the 8 elements of order 3 in $S_4$, then $\phi(G)$ contains all 3-cycles in $S_4$, so $\phi(G) = A_4$. Hence, $G \cong A_4$.
+
+\ex Let $|G| = p^2q$ for distinct primes $p, q$. We show $G$ has a normal Sylow subgroup. Let $P \in \syl_p(G)$ and $Q \in \syl_q(G)$. If $p > q$, then $n_p \equiv 1 \bmod p$ and $n_p \mid q$, so $n_p = 1$, hence $P \nsub G$.
+
+If $p < q$, note that $n_q = 1$ implies $Q \nsub G$, so suppose $n_q \neq 1$. Since $n_q \mid p^2$, then we have $n_q = p$ or $p^2$. Clearly, $n_q \neq p$ since $p < q$, so $n_q = p^2$, and put $n_q = 1 + kq$ for $k \in \zp$. Then
+\[kq = p^2 - 1 = (p - 1)(p + 1).\]
+It follows that $q$ divides either $p - 1$ or $p + 1$. Since $p < q$, the former cannot be true, hence $q \mid p + 1$. This forces $q = p + 1$, so $p = 2$ and $q = 3$. In this case, $n_q = 4$, hence we may use the previous example.
+
+\prop[Order 60 and Simplicity] \label{prop4.21}
+If $|G| = 60$ and $n_5(G) > 1$, then $G$ is simple.
+
+\begin{proof}
+    Suppose $H \nsub G$ is nontrivial and proper. Note that $n_5 \equiv 1 \bmod 5$ and $n_5 \mid 12$, hence $n_5 = 6$. Let $P \in \syl_5(G)$ with $|N_G(P)| = 10$. If $5$ divides $|H|$, then $H$ contains a Sylow 5-subgroup of $G$. Normality of $H$ implies $H$ contains all 6 Sylow 5-subgroups of $G$, hence $|H| \geq 6(5 - 1) = 24$. Since $|H|$ divides $60$, then $|H| = 30$, but a previous example shows $H$ contains a normal Sylow 5-subgroup.
+
+    If $|H| = 6$ or 12, then $H$ contains a normal, hence characteristic Sylow 3-subgroup of $G$, which would imply normality of the Sylow 3-subgroup in $G$. We may replace $H$ with a subgroup of order 2, 3, or 4. Let $\bar G = G/H$ with $|\bar G| = 30, 20$, or 15. We know $\bar G$ has a normal Sylow 5-subgroup $\bar P$ by previous results. Let $H_1$ be the preimage of $\bar P$. Then $H_1 \nsub G$ with $H_1 \neq G$, and 5 divides $|H_1|$. This contradicts the previous case, so $G$ is simple.
+\end{proof}
+
+\cor[$A_5$ is Simple] \label{cor4/22}
+\begin{proof}
+    Note $\gen{(1\ 2\ 3\ 4\ 5)}, \gen{(1\ 3\ 2\ 4\ 5)} \in \syl_5(A_5)$. \autoref{prop4.21} makes the result immediate.
+\end{proof}
+
+\prop[Classifying Simple Groups of Order 60] \label{prop4.23}
+If $|G| = 60$ and is simple, then $G \cong A_5$.
+
+\begin{proof}
+    Observe that $n_2 = 3, 5$, or 15. Let $P \in \syl_2(G)$, $N = N_G(P)$, and $|G : N| = n_2$. Observe that for some $H < G$, we claim $|G : H| < 5$. If it were, then \autoref{theo4.3} gives some $K \leq H$ such that $G/K \cong S_4, S_3,$ or $S_2$. Simplicity of $G$ implies $K = 1$. However, 60 does not divide 24, 6, or 2. In particular, $n_2 \neq 3$.
+
+    Suppose $n_2 = 5$. Then $G$ acts on $\syl_2(G)$ with an afforded homomorphism $\phi : G \to S_5$. Since $G$ is simple, then $\ker\phi = 1$, so $G \cong \phi(G) \leq S_5$. If $G \not\leq A_5$, then $S_5 = GA_5$, and $G \cap A_5 \nsub G$ with $|G : G \cap A_5| = 2$, contradicting simplicity of $G$. Hence, $G \leq A_5$, and since $|A_5| = 60$, then $G = A_5$.
+
+    If $n_2 = 15$ and each $P \in \syl_2(G)$ was pairwise disjoint, then $G$ has at least $15(4 - 1) = 45$ elements of order 2. Moreover, $n_5 = 6$ gives at least $6(5 - 1) = 24$ elements of order 5, so $G$ has at least $45 + 24 + 1 = 70$ elements, a contradiction. Hence, there exist distinct $P_1, P_2 \in \syl_2(G)$ such that $|P_1 \cap P_2| = 2$. Put $N' = N_G(P_1 \cap P_2)$. Note that $P_1$ and $P_2$ are both subgroups of $N'$ since they are abelian, and simplicity of $G$ implies $N' \neq G$ since $P_1 \cap P_2$ cannot be normal in $G$. Since $N'$ cannot have index 3 or 1, it must have index 5, and $|N'| = 12$. But we may use the preceding example to show that $G$ collapses to $A_5$, which contradicts the fact that $n_2(A_5) = 5$, by Exercise 4.5.31. Hence, $n_2 \neq 15$.
+\end{proof}
+
+\newpage
+
+\subsection{\texorpdfstring{The Simplicity of $A_n$}{The Simplicity of An}} \label{sec4.6}
+
+\theo[Simplicity of $A_n$] \label{theo4.24}
+$A_n$ is simple for all $n \geq 5$.
+
+\begin{proof}
+    Inducting on $n$, we have the case for $n = 5$. Assume $n \geq 6$, and let $G = A_n$. Let $H \nsub G$ be nontrivial and proper. Let $G_i$ be the stabilizer of $i$ of $G$ on the set $\set{1, 2, \ldots, n}$ by the natural action. Then $G_i \cong A_{n - 1}$ is simple by the inductive hypothesis. 
+
+    Let $\sigma \in H$ with $\sigma \neq \id$, but $\sigma(i) = i$ for some $i$. Then $\sigma \in H \cap G_i \nsub G_i$, we have $H \cap G_i = G_i$ by simplicity of $G_i$, or $G_i \leq H$. We know by Exercise 4.1.2 that $\tau G_i\tau\inv = G_{\tau(i)}$ for every $\tau \in G$, hence $G_{\tau(i)} \leq H$ for all $\tau \in G$. Since $G$ acts transitively on $\set{1, 2, \ldots, n}$, then $G_i \leq H$ for all $i$. Note that each $\alpha \in A_n$ is a product of $2r$ cycles, hence
+    \[\alpha = \alpha_1\alpha_2 \cdots \alpha_r,\]
+    where $\alpha_j$ is a product of 2 transpositions. Since $n \geq 6$, then $\alpha_j$ fixes some $i$, hence $\alpha_j \in G_i \leq H$. It follows that $\alpha \in H$, so $H = G$, a contradiction. Hence, no nonidentity element of $H$ fixes any $i$.
+
+    Suppose $\sigma_1, \sigma_2 \in H$ with $\sigma_1(i) = \sigma_2(i)$ for some $i$. Then $\sigma_2\inv\sigma_1(i) = i$, so $\sigma_2\inv\sigma_1 = \id$ by the previous paragraph, hence $\sigma_1 = \sigma_2$. Now suppose $\sigma \in H$ has cycle decomposition that contains a 3-cycle, like
+    \[\sigma = (a_1\ a_2\ a_3 \cdots) \cdots\]
+    Suppose $\rho \in G$ such that $\rho(a_1) = a_1, \rho(a_2) = a_2$, but $\rho(a_3) \neq a_3$. Then
+    \[\sigma' = \rho\sigma\rho\inv = (a_1\ a_2\ \rho(a_3) \cdots) \cdots\]
+    so that $\sigma$ and $\sigma'$ are distinct elements of $H$ that agree on $a_1$ and $a_2$, contradicting the previous paragraph. Hence, no element of $H$ has a 3-cycle in its cycle decomposition.
+
+    Consider nonidentity $\sigma \in H$ with cycle decomposition
+    \[\sigma = (a_1\ a_2)(a_3\ a_4)(a_5\ a_6) \cdots\]
+    Let $\rho = (a_1 a_2)(a_3 a_5) \in G$. Then
+    \[\sigma' = \rho\sigma\rho\inv = (a_1\ a_2)(a_5\ a_4)(a_3\ a_6) \cdots\]
+    so that $\sigma$ and $\sigma'$ are distinct elements of $H$ that agree on $a_1$ and $a_2$, again contradicting the previous argument. It follows that $H$ cannot contain any nonidentity element, so $H = 1$, a contradiction.
+\end{proof} 

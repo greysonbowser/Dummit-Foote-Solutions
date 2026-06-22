@@ -1,0 +1,226 @@
+\section{Introduction to Groups}
+
+\subsection{Basic Axioms and Examples} \label{sec1.1}
+
+\defi A \textbf{binary operation} on a set $G$ is a function $\star : G \times G \to G$. For $a, b \in G$, we write $a \star b$ instead of $\star(a, b)$.
+
+\defi A binary operation $\star$ on $G$ is \textbf{associative} if $(a \star b) \star c = a \star (b \star c)$ for all $a, b, c \in G$.
+
+\defi Let $\star$ be a binary operation on $G$. Then $a, b \in G$ are said to \textbf{commute} if $a \star b = b \star a$. If every pair of elements in $G$ commute, then $\star$ is said to be \textbf{commutative}.
+
+\defi Let $H \subseteq G$ and $\star$ be a binary operation on $G$. Then $H$ is \textbf{closed} under $\star$ if $a \star b \in H$ for all $a, b \in H$. Note that if $\star$ is associative or commutative on $G$, then it is also associative or commutative on $H$.
+
+\defi A \textbf{group} is an ordered pair $(G, \star)$ with set $G$ and binary operation $\star$ such that the following axioms hold:
+\begin{enumerate}
+    \item $(a \star b) \star c = a \star (b \star c)$ for all $a, b, c \in G$, i.e., $\star$ is associative,
+    \item there exists $e \in G$, called the \textbf{identity} of $G$, such that $e \star a = a \star e = a$ for all $a \in G$, and
+    \item for each $a \in G$, there exists $a\inv \in G$ (called the \textbf{inverse} of $a$) such that $a \star a\inv = a\inv \star a = e$.
+\end{enumerate}
+Moreover, we say $(G, \star)$ is \textbf{abelian} if $\star$ is commutative.
+
+\defi Let $(G, \star)$ and $(H, \diamond)$ be groups. The \textbf{direct product} of $G$ and $H$ is the group $(G \times H, *)$ where the elements are from the Cartesian product and $*$ is defined componentwise:
+\[(g_1, h_1) * (g_2, h_2) = (g_1 \star g_2, h_1 \diamond h_2) \quad \text{for all } g_1, g_2 \in G \text{ and } h_1, h_2 \in H.\]
+
+\prop[Group Properties] \label{prop1.1}
+Let $(G, \star)$ be a group with $g, h \in G$. Then the following hold:
+\begin{enumerate}
+    \item The identity of $G$ is unique,
+    \item the inverse of $g$ is unique,
+    \item $(g\inv)\inv = g$,
+    \item $(g \star h)\inv = h\inv \star g\inv$,
+    \item for $g_1, g_2, \ldots, g_n \in G$, the expression $g_1 \star g_2 \star \cdots \star g_n$ is unambiguous.
+\end{enumerate}
+\begin{proofnum}
+    \item Let $e$ and $e'$ be two identities of $G$. Then $e = e \star e' = e'$.
+    \item Let $h$ and $h'$ be two inverses of $g$. Then $h = h \star e = h \star (g \star h') = (h \star g) \star h' = e \star h' = h'$.
+    \item Note that $g \star g\inv = e$ so that $g\inv$ is an inverse of $g\inv$. By the uniqueness of inverses, we have $(g\inv)\inv = g$.
+    \item We have $(g \star h) \star (g \star h)\inv = e$. Multiplying on the left by $g\inv$ then $h\inv$ proves the result.
+    \item We proceed by induction. Note that $n = 1, 2, 3$ are trivial. Assume for every $k < n$ that $k$ elements $g_1, g_2, \ldots, g_k$ can be unambiguously expressed as $g_1 \star g_2 \star \cdots \star g_k$. Then for $n$ elements, we can split the product $g_1 \star g_2 \star \cdots \star g_n$ into two products of $k$ and $n - k$ elements for some $1 \leq k < n$, and by the inductive hypothesis, these two products are unambiguous. Since $\star$ is associative, the result follows.
+\end{proofnum}
+
+\prop[Cancellation Laws] \label{prop1.2}
+Let $G$ be a group with $g, h \in G$. Then for any $a, b \in G$, the equations $ag = h$ and $gb = h$ have unique solutions for $a$ and $b$, respectively. In particular,
+\begin{enumerate}
+    \item if $ag = ah$, then $g = h$, and
+    \item if $ga = ha$, then $g = h$.
+\end{enumerate}
+
+\begin{proof}
+    We have $a = hg\inv$ and $b = g\inv h$, and uniqueness follows from uniqueness of inverses. (i) is satisfied by left-multiplying both sides by $a\inv$, and (ii) is satisfied by right-multiplying both sides by $a\inv$.
+\end{proof}
+
+\defi Let $G$ be a group with $g \in G$. The \textbf{order} of $g$, denoted by $|g|$, is the smallest positive integer $n$ such that $g^n = 1$. If no such $n$ exists, then we say $g$ has infinite order.
+
+\defi Let $G = \set{g_1, g_2, \ldots, g_n}$ be a group with $g_1 = 1$. The \textbf{multiplication table}, or \textbf{group table}, of $G$ is the $n \times n$ matrix whose $(i, j)$-entry is $g_i g_j$ for $1 \leq i, j \leq n$.
+
+\newpage
+
+\subsection{Dihedral Groups} \label{sec1.2}
+
+\defi Let $n \geq 3$ be an integer. The \textbf{dihedral group} of order $2n$, denoted by $D_{2n}$, is the group of symmetries of a regular $n$-gon. Two elements of $D_{2n}$ are the rotation $r$ by $2\pi/n$ radians and the reflection $s$ across a line of symmetry.
+
+\note The following are claims about $D_{2n}$:
+\begin{enumerate}
+    \item $1, r, r^2, \ldots, r^{n - 1}$ are all distinct, and $r^n = 1$ so that $|r| = n$.
+    \item $|s| = 2$.
+    \item $s \neq r^i$ for any $i$.
+    \item $sr^i \neq sr^j$ for all $0 \leq i, j \leq n - 1$ with $i \neq j$, so
+    \[D_{2n} = \{1, r, r^2, \ldots, r^{n-1}, s, sr, sr^2, \ldots, sr^{n-1}\}.\]
+    \item $rs = sr\inv$.
+    \item $r^is = sr^{-i}$ for all $0 \leq i \leq n$.
+\end{enumerate}
+
+\begin{proofnum}
+    \item Clearly, no two rotations by different angles are the same. Moreover, a $2\pi k$ rotation is the identity if and only if $n \mid k$, hence $|r| = n$.
+    \item Clear.
+    \item Reflections do not preserve orientation while rotations do, so $s$ cannot be a power of $r$.
+    \item If (iv) were true, then it would imply $r^i = r^j$ for some $i \neq j$, which contradicts (i).
+    \item We consider two cases:
+    \begin{enumerate}
+        \item If $n$ is odd, then $s(1) = 1$ and $s(i) = n + 2 - i$.
+        \item If $n$ is even, then $s(1) = 1$ and $s(n/2 + 1) = n/2 + 1$. For other $i$, then $s(i) = n + 2 - i$.
+    \end{enumerate}
+    For $r$, we have $r(n) = 1$ and $r(i) = i + 1$ for $1 \leq i \leq n - 1$. Then $r(s(1)) = r(1) = 2$ and $r(s(2)) = r(n) = 1$. On the other hand, $s(r\inv(1)) = s(n) = 1$ and $s(r\inv(2)) = s(1) = 1$. Hence $rs$ and $sr\inv$ have the same effect on vertices 1 and 2, and they must be the same permutation.
+    \item By (v), $i = 1$ holds true. Suppose it is true for $i \in \zp$. Then for $i + 1$, we have $r^{i + 1}s = r(r^is) = r(sr^{-i}) = (sr\inv)r^{-i} = sr^{-(i + 1)}$, and the result follows by induction.
+\end{proofnum}
+
+\defi A set of \textbf{generators} of a group $G$ is a subset $S \subseteq G$ such that every element of $G$ can be expressed as a finite product of elements of $S$ and their inverses. We denote this as $G = \gen{S}$. We also say $S$ \textbf{generates} $G$.
+
+\defi Equations that are satisfied by the generators of a group are called \textbf{relations}.
+
+\defi Let $G = \gen S$, and let $R_1, \ldots, R_m$ be equations satisfied by elements of $S \cup \set 1$. Then the generators and relations form a \textbf{presentation} of $G$, denoted by
+\[G = \gen{S \mid R_1, \ldots, R_m}.\]
+A presentation for $D_{2n}$ is given by
+\[D_{2n} = \gen{r, s \mid r^n = s^2 = 1, rs = sr\inv}.\]
+
+\ex The group $X_{2n}$ with presentation
+\[X_{2n} = \gen{x, y \mid x^n = y^2 = 1, xy = yx^2}\]
+has order at most 6 via the chain of equalities
+\[x = xy^2 = (xy)y = (yx^2)y = (yx)(xy) = (yx)(yx^2) = y(xy)x^2 = y(yx^2)x^2 = x^4\]
+
+\ex The group $Y$ with presentation
+\[Y = \gen{u, v \mid u^4 = v^3 = 1, uv = v^2u^2}\]
+is trivial.
+
+\newpage
+
+\subsection{Symmetric Groups} \label{sec1.3}
+
+\defi Let $\Omega$ be a nonempty set, and let $S_\Omega$ be the set of all permutations of $\Omega$. Then $(S_\Omega, \circ)$ is a group under composition of functions, called the \textbf{symmetric group on} $\Omega$.
+
+\defi Let $\Omega = \set{1, 2, \ldots, n}$. Then $S_\Omega$ is denoted by $S_n$, and we say $S_n$ is the \textbf{symmetric group of degree $n$}.
+
+\defi A \textbf{cycle} is a string of integers that represents a permutation in $S_n$ that cyclically permutes the integers in the cycle and fixes all other integers. The number of integers in a cycle is its \textbf{length}, and if there are $\ell$ integers in the cycle, we call it an \textbf{$\ell$-cycle}. We call two cycles with no common integers \textbf{disjoint cycles}.
+
+\defi The \textbf{cycle decomposition} of some $\sigma \in S_n$ is the product of disjoint cycles that represents $\sigma$. Note that the cycle decomposition of $\sigma$ is unique up to the order of the cycles and the starting point of each cycle.
+
+\defi The \textbf{cycle decomposition algorithm} is a set of steps that can be used to find the cycle decomposition of some $\sigma \in S_n$:
+
+\begin{enumerate}
+    \item Start with the smallest integer from $\set{1, 2, \ldots, n}$ that has not appeared in any previous cycle. Typically, we start with $a = 1$ if no other cycle has been formed yet.
+    \item Apply $\sigma$ to $a$ to get $\sigma(a)$. If $\sigma(a) = a$, then the cycle is $(a)$, and we can move on to the next smallest integer that has not appeared in any previous cycle. Otherwise, we continue applying $\sigma$ to the result until we get back to $a$, and the cycle is formed by the integers in the order they were generated.
+    \item Repeat the above steps until all integers have appeared in some cycle.
+    \item Remove all single cycles of the form $(a)$ since they represent the identity permutation on $a$.
+\end{enumerate}
+
+\ex Let $n = 13$ and define $\sigma \in S_{13}$ as
+    \[\begin{array}{ccccccc}
+        \sigma(1) = 12, & \sigma(2) = 13, & \sigma(3) = 3, & \sigma(4) = 1, & \sigma(5) = 11, & \sigma(6) = 9, & \sigma(7) = 5, \\
+        \sigma(8) = 10, & \sigma(9) = 6, & \sigma(10) = 4, & \sigma(11) = 7, & \sigma(12) = 8, & \sigma(13) = 2
+    \end{array}\]
+    \begin{itemize}
+        \item Starting the cycle, begin with $a = 1$. Since $\sigma(1) = 12\neq 1$, then $\sigma(12) = 8, \sigma(8) = 10, \sigma(10) = 4$, and $\sigma(4) = 1$. The first cycle is then $(1\ 12\ 8\ 10\ 4)$.
+        \item The next smallest number is 2, so $\sigma(2) = 13$ and $\sigma(13) = 2$. Then the second cycle is $(2\ 13)$.
+        \item The next smallest number is 3, so $\sigma(3) = 3$, and the third cycle is $(3)$.
+        \item The next smallest is 5, so $\sigma(5) = 11, \sigma(11) = 7$, and $\sigma(7) = 5$. Then the fourth cycle is $(5\ 11\ 7)$.
+        \item The next smallest is 6, so $\sigma(6) = 9$ and $\sigma(9) = 6$. Then the fifth cycle is $(6\ 9)$.
+        \item Remove the single cycle $(3)$.
+    \end{itemize}
+    Following this, we have $\sigma = (1\ 12\ 8\ 10\ 4)(2\ 13)(5\ 11\ 7)(6\ 9)$.
+
+\note $S_n$ is a non-abelian group for all $n \geq 3$ since the cycles $(1\ 2)$ and $(2\ 3)$ do not commute.
+
+\note Disjoint cycles permute only the integers in the cycle, hence they commute.
+
+\note The order of an $\ell$-cycle is simply $\ell$. The order of a cycle with $k$ disjoint cycles of lengths $\ell_1, \ell_2, \ldots, \ell_k$ is $\lcm(\ell_1, \ell_2, \ldots, \ell_k)$.
+
+\newpage
+
+\subsection{Matrix Groups} \label{sec1.4}
+
+\defi A \textbf{field} is a set $F$ with two binary operations $+$ and $\cdot$ such that $(F, +)$ is abelian with identity 0, and ($F - \set 0, \cdot)$ is abelian with identity 1. Moreover, the following distributive law holds:
+\[a \cdot (b + c) = (a \cdot b) + (a \cdot c) \quad \text{for all } a, b, c \in F.\]
+Moreover, we denote $F\unt = F - \set 0$.
+
+\defi Let $F$ be a field. The \textbf{general linear group of degree $n$} is the set:
+\[\gl_n(F) = \set{A \mid \text{$A$ is an $n \times n$ matrix with entries from $F$ and $\det(A) \neq 0$}}\]
+with the binary operation of matrix multiplication.
+
+\note Some recorded results for fields, which are proven later:
+\begin{itemize}
+    \item if $F$ is a field with $|F| < \infty$, then $|F| = p^k$ for prime $p$ and $k \in \zp$, and
+    \item if $|F| = p < \infty$, then $|\gl_n(F)| = (p^n - 1)(p^n - p)(p^n - p^2) \cdots (p^n - p^{n - 1})$.
+\end{itemize}
+
+\subsection{The Quaternion Group} \label{sec1.5}
+
+\defi The \textbf{quaternion group}, denoted by $Q_8$, is defined to be the set
+\[Q_8 = \set{\pm 1, \pm i, \pm j, \pm k}.\]
+It has operation $\cdot$ defined by the following rules:
+\begin{enumerate}
+    \item $1 \cdot q = q \cdot 1 = q$ for all $q \in Q_8$,
+    \item $(-1) \cdot (-1) = 1, (-1) \cdot q = q \cdot (-1) = -q$ for all $q \in Q_8$,
+    \item $i^2 = j^2 = k^2 = -1$,
+    \item $ij = k, jk = i, ki = j$, and
+    \item $ji = -k, kj = -i, ik = -j$.
+\end{enumerate}
+This is a non-abelian group of order 8.
+
+\subsection{Homomorphisms and Isomorphisms} \label{sec1.6}
+
+\defi Let $(G, \star)$ and $(H, \diamond)$ be groups. A \textbf{homomorphism} is a map $\phi : G \to H$ such that
+\[\phi(g \star h) = \phi(g) \diamond \phi(h), \quad \text{for all $g, h \in G$}.\]
+$\phi$ is an \textbf{isomorphism} if $\phi$ is a bijection. If there exists an isomorphism from $G$ to $H$, then we say $G$ and $H$ are \textbf{isomorphic}, denoted by $G \cong H$. Moreover, for two isomorphic groups $G$ and $H$, it is to be deduced that
+\begin{enumerate}
+    \item $|G| = |H|$,
+    \item $G$ is abelian if and only if $H$ is abelian, and
+    \item for all $g \in G$, then $|g| = |\phi(g)|$.
+\end{enumerate}
+
+\ex Let $\Gamma$ and $\Sigma$ be two nonempty sets. Then $S_\Gamma \cong S_\Sigma$ if and only if $|\Gamma| = |\Sigma|$. A sketch is as follows:
+\begin{enumerate}
+    \item Let $\theta : \Gamma \to \Sigma$ be some bijection. Then the map
+    \[\phi : S_\Gamma \to S_\Sigma, \quad \phi(\sigma) = \theta \circ \sigma \circ \theta^{-1}\]
+    is an isomorphism.
+    \item If $S_\Gamma \cong S_\Sigma$, we note that for finite $\Gamma$ and $\Sigma$ where $|\Gamma| = m$ and $|\Sigma| = n$, then $m! = n!$ implies $m = n$.
+\end{enumerate}
+
+\note Let $|G| = n < \infty$ with some presentation, and let $S = \set{s_1, s_2, \ldots, s_k}$ generate $G$. Let $H$ be another group with $\set{r_1, \ldots, r_k} \subseteq H$.
+\begin{itemize}
+    \item If the $r_i$ satisfy the same relations as the $s_i$, then there is a unique homomorphism $\phi : G \to H$ such that $\phi(s_i) = r_i$ for all $i$.
+    \item If $H = \gen{r_1, \ldots, r_k}$ and the $r_i$ satisfy the same relations as the $s_i$, then $\phi$ is surjective.
+    \item If $H$ is finite and $|H| = |G|$, then $\phi$ is injective, hence an isomorphism.
+\end{itemize}
+
+\newpage
+
+\subsection{Group Actions} \label{sec1.7}
+
+\defi A \textbf{group action} of a group $G$ on a set $A$ is a map $G \times A \to A$, written as $g \cdot a$ for $g \in G$ and $a \in A$, such that
+\begin{enumerate}
+    \item $g \cdot (h \cdot a) = (gh) \cdot a$ for all $g, h \in G$ and $a \in A$, and
+    \item $1 \cdot a = a$ for all $a \in A$.
+\end{enumerate}
+
+\defi Let a group $G$ act on a set $A$. For fixed $g \in G$, there exists a permutation $\sigma_g$ on $A$ such that
+\[\sigma_g(a) = g \cdot a.\]
+The map $g \mapsto \sigma_g$ is a homomorphism from $G$ to $S_A$, called the \textbf{permutation representation} of $G$ on $A$. If instead we have a homomorphism $\phi : G \to S_A$, then we can define a group action of $G$ on $A$ by $g \cdot a = \phi(g)(a)$ for all $g \in G$ and $a \in A$.
+
+\defi Let $G$ act on $A$.
+\begin{itemize}
+    \item The \textbf{trivial action} of $G$ on $A$ is defined by $ga = a$ for all $g \in G$ and $a \in A$. Moreover, the associated permutation representation is the homomorphism $\phi : G \to S_A$ defined by $\phi(g) = \id$ for all $g \in G$.
+    \item If distinct elements of $G$ induce distinct permutations on $A$, then the action is \textbf{faithful}. In this case, the associated permutation representation is injective.
+    \item The \textbf{kernel} of the action is the set $\set{g \in G \mid ga = a \text{ for all } a \in A}$.
+\end{itemize}
+
+\defi Let $G$ act on itself. Then the \textbf{left regular action} of $G$ on itself is defined by $g \cdot a = ga$ for all $g, a \in G$. Note that this action is faithful, since $ga = ha$ for all $a \in G$ implies $g = h$.
